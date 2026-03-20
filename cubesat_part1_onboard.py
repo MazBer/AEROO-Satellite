@@ -275,7 +275,8 @@ def verify_crc(packet):
     """Gelen paketin CRC doğrulaması."""
     if len(packet) < 4:
         return False
-    data    = packet[:-2]
+    # CRC yalnızca payload (header hariç) byte'larının XOR'udur.
+    data    = packet[2:-2]
     rx_crc  = struct.unpack(">H", packet[-2:])[0]
     calc_crc = 0
     for b in data:
